@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.hide{
+				display: none;
+			}
+			.show{
+				display: block;
+			}
+			h2{
+				text-align: center;
+			}
+			.content{
+				width: 500px;
+				height: auto;
+				margin: 0 auto;
+			}
+			table{
+				width: 100%;
+				border: 1px solid #efefef;
+				border-collapse: collapse;
+			}
+			table th, table td{
+				border: 1px solid #efefef;
+				text-align: center;
+			}
+			a{
+				text-decoration: none;
+			}
+			input{
+				height: 26px;
+				width: 340px;
+			}
+			.addBox{
+				text-align: center;
+			}
+			.addBox > div{
+				text-align: center;
+				margin-bottom: 20px;
+			}
+			button{
+				width: 100px;
+				height: 40px;
+				outline: none;
+				border: 1px solid #2345aa;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>todoListVue练手</h2>
+		<div id="app" class="content">
+			<table>
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>书名</th>
+						<th>作者</th>
+						<th>价格</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tr v-for='item in list' :key="item.id">
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.author}}</td>
+					<td>{{item.price}}</td>
+					<td>
+						<a href="javascript:;" @click="delBooks(item.id)">删除</a>
+					</td>
+				</tr>
+			</table>
+			<div class="addBox">
+				<h2>新增书籍</h2>
+				<div>
+					书名：<input type="text" v-model="name"/>
+				</div>
+				<div>
+					作者：<input type="text" v-model="author"/>
+				</div>
+				<div>
+					价格：<input type="text" v-model="price"/>
+				</div>
+				<button @click='addBook'>添加</button>
+			</div>
+		</div>
+		
+	</body>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				name: '',
+				author: '',
+				price: 0,
+				list:[
+					{
+						id:1,
+						name:'心三国',
+						author:'张三',
+						price:123
+					},
+					{
+						id:2,
+						name:'心三国',
+						author:'张三',
+						price:123
+					},
+					{
+						id:3,
+						name:'心三国',
+						author:'张三',
+						price:123
+					},
+					{
+						id:4,
+						name:'心三国',
+						author:'张三',
+						price:123
+					},
+					{
+						id:5,
+						name:'心三国',
+						author:'张三',
+						price:123
+					},
+				]
+			},
+			methods:{
+				addBook:function(){
+					if(!this.name || !this.author) return;
+					var obj = {
+						id:(this.list[this.list.length - 1].id + 1),
+						name: this.name,
+						author: this.author,
+						price: this.price
+					}
+					this.list.push(obj);
+					this.name = '';
+					this.author = '';
+					this.price = 0;
+				},
+				delBooks:function(id){
+					var id = id || '';
+					for(i in this.list){
+						if(this.list[i].id == id){
+							this.list.splice(i,1);
+						}
+					}
+				}
+			
+			}
+		})
+	</script>
+</html>
